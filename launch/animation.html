@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mem — the tome opens (renders)</title>
+<style>
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;background:#0C0908;display:flex;align-items:center;justify-content:center;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+  .stage{position:relative;width:390px;height:844px;overflow:hidden;border-radius:44px;background:#0C0908;
+    box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  .shot{position:absolute;inset:0;background-size:cover;background-position:center;
+    will-change:transform,opacity}
+  .closed{background-image:url(art/tome-closed.jpg);background-size:contain;background-repeat:no-repeat;animation:push 2.6s ease-out both}
+  .half{background-image:url(art/tome-half.jpg);background-size:contain;background-repeat:no-repeat;opacity:0;animation:reveal 0.42s ease-out 0.62s both, drift 2.0s ease-out 0.62s both}
+  .open{background-image:url(art/tome-open.jpg);background-size:contain;background-repeat:no-repeat;opacity:0;animation:reveal 0.5s ease-out 1.06s both, settle 1.6s ease-out 1.06s both}
+  .bloom{position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(58% 42% at 52% 46%, rgba(255,226,175,.30), rgba(255,226,175,.06) 45%, transparent 72%);
+    opacity:0;animation:bloom 1.5s ease-out 0.75s both}
+  .vignette{position:absolute;inset:0;pointer-events:none;
+    background:radial-gradient(72% 60% at 50% 45%, transparent 55%, rgba(0,0,0,.55) 100%)}
+  .caption{position:absolute;bottom:42px;left:0;right:0;text-align:center;font-size:9.5px;letter-spacing:2.4px;
+    text-transform:uppercase;color:rgba(226,206,174,.46);opacity:0;animation:fadein .8s ease-out 1.5s both}
+  .again{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);border:1px solid rgba(200,170,130,.4);
+    background:rgba(28,22,16,.92);color:#D9C6A8;border-radius:999px;padding:8px 14px;font:inherit;font-size:12px;cursor:pointer}
+  @keyframes reveal{from{opacity:0}to{opacity:1}}
+  @keyframes push{from{transform:scale(1.06)}to{transform:scale(1.0)}}
+  @keyframes drift{from{transform:scale(1.03)}to{transform:scale(1.0)}}
+  @keyframes settle{from{transform:scale(1.02)}to{transform:scale(1.0)}}
+  @keyframes bloom{0%{opacity:0}35%{opacity:1}100%{opacity:0}}
+  @keyframes fadein{to{opacity:1}}
+  @media (prefers-reduced-motion: reduce){
+    .closed,.half,.open,.bloom,.caption{animation:none}
+    .half,.open{opacity:1}
+  }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="shot closed"></div>
+  <div class="shot half"></div>
+  <div class="shot open"></div>
+  <div class="bloom"></div>
+  <div class="vignette"></div>
+  <div class="caption">the first page is blank until you speak</div>
+</div>
+<button class="again" onclick="replay()">play again</button>
+<script>
+function replay(){const s=document.getElementById('stage');const c=s.cloneNode(true);s.parentNode.replaceChild(c,s);}
+</script>
+</body>
+</html>
