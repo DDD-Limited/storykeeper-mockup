@@ -3,107 +3,120 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Mem — the tome opens</title>
+<title>Mem — the tome</title>
 <style>
-  :root{
-    --paper:#F6F1E7; --paper2:#FFFDF8; --ink:#1A1714; --brass:#A8641F; --deep:#2F4A3F;
-    --leather:#3A2A22; --leather2:#241813;
-  }
+  :root{ --ink:#1A1714; --brass:#A8641F; }
   *{box-sizing:border-box}
   html,body{height:100%}
-  body{margin:0;background:#DCD1BE;display:flex;align-items:center;justify-content:center;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink)}
-  .stage{width:390px;height:844px;background:radial-gradient(120% 80% at 50% 30%,#FBF6EC 0%,#F1E9DA 55%,#E4D9C4 100%);
-    border-radius:44px;position:relative;overflow:hidden;perspective:1500px;display:flex;
-    align-items:center;justify-content:center;box-shadow:0 30px 70px rgba(40,28,18,.25)}
-  .book{position:relative;width:250px;height:330px;transform-style:preserve-3d;
-    transform:rotateX(14deg) rotateY(-8deg);animation:settle 1.4s ease-out both}
-  /* the block of pages, seen once the cover swings away */
-  .pages{position:absolute;inset:0;transform:translateZ(-3px);background:linear-gradient(90deg,#E9DFCB 0 6px,var(--paper2) 6px);
-    border-radius:3px 8px 8px 3px;box-shadow:inset 0 0 0 1px #E0D5BF, 0 18px 40px rgba(50,35,20,.22);
-    display:flex;flex-direction:column;justify-content:center;padding:34px 30px 34px 38px;gap:14px}
-  .rule{height:1px;background:#E2D6C0}
-  .line{height:9px;border-radius:5px;background:linear-gradient(90deg,var(--ink),var(--ink));
-    opacity:.18;transform:scaleX(0);transform-origin:left center;animation:write .9s ease-out forwards}
-  .line.t{border-radius:3px;opacity:.5;height:15px;background:var(--ink)}
-  .line.w1{width:78%;animation-delay:1.55s}
-  .line.w2{width:92%;animation-delay:1.75s}
-  .line.w3{width:64%;animation-delay:1.95s}
-  .line.title{width:56%;height:20px;opacity:.72;animation-delay:1.35s;background:var(--deep)}
-  .sig{font-family:Georgia,serif;font-style:italic;font-size:15px;color:#8B7A63;opacity:0;
-    animation:fade 1s ease-out 2.35s forwards;margin-top:6px}
-  /* the cover: pivots on the spine, which is the left edge */
-  .cover{position:absolute;inset:0;transform-origin:left center;transform-style:preserve-3d;
-    animation:open 1.25s cubic-bezier(.22,.72,.16,1) 0.55s forwards}
-  .face{position:absolute;inset:0;border-radius:3px 9px 9px 3px;backface-visibility:hidden;transform:translateZ(3px);
+  body{margin:0;background:#14100D;display:flex;align-items:center;justify-content:center;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+
+  /* a stage, not a page: the book sits on a surface with one warm light above it */
+  .stage{position:relative;width:390px;height:844px;overflow:hidden;border-radius:44px;
     background:
-      radial-gradient(140% 120% at 30% 20%,#4A352A 0%,var(--leather) 45%,var(--leather2) 100%);
-    box-shadow:0 26px 50px rgba(30,20,10,.38), inset 0 0 0 1px #5A4132}
-  .face.back{transform:rotateY(180deg) translateZ(3px);
-    background:
-      linear-gradient(90deg,#D9CBB2 0 10px,#FBF6EB 10px 26px,#F3EAD8 26px 100%);
-    box-shadow:inset -18px 0 26px rgba(120,95,60,.14), inset 0 0 0 1px #DED2BB}
-  .spine{position:absolute;left:0;top:0;bottom:0;width:14px;border-radius:3px 0 0 3px;
-    background:linear-gradient(90deg,#1B1310,#3A2A22 60%,#2A1C16)}
-  .plate{position:absolute;left:26px;right:26px;top:46px;bottom:46px;border:1px solid rgba(168,100,31,.55);
-    border-radius:2px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
-  .plate .mark{width:34px;height:34px;border:1px solid rgba(200,161,94,.8);border-radius:50%;
-    display:flex;align-items:center;justify-content:center;color:#C8A15E;font-size:13px}
-  .plate h1{font-family:Georgia,serif;font-weight:400;letter-spacing:.34em;color:#D9BC86;font-size:20px;margin:6px 0 0;
-    text-indent:.34em}
-  .plate p{margin:0;font-size:8.5px;letter-spacing:.28em;text-transform:uppercase;color:#A98E5C}
-  .clasp{position:absolute;right:-7px;top:50%;width:14px;height:26px;margin-top:-13px;border-radius:3px;
-    background:linear-gradient(180deg,#D9BC86,#8E6A34);box-shadow:0 1px 3px rgba(0,0,0,.4);opacity:1}
-  .glow{position:absolute;inset:-40% -30%;background:radial-gradient(closest-side,rgba(255,246,225,.55),transparent 70%);
-    opacity:0;animation:glow 1.6s ease-out 1.1s forwards;pointer-events:none}
-  @keyframes settle{from{transform:rotateX(18deg) rotateY(-12deg) translateY(6px)}to{transform:rotateX(14deg) rotateY(-8deg)}}
-  @keyframes open{0%{transform:rotateY(0)}100%{transform:rotateY(-158deg)}}
-  @keyframes write{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-  @keyframes fade{from{opacity:0}to{opacity:1}}
-  @keyframes glow{0%{opacity:0}40%{opacity:1}100%{opacity:0}}
-  .cap{position:absolute;bottom:26px;left:0;right:0;text-align:center;font-size:10.5px;letter-spacing:.14em;
-    text-transform:uppercase;color:#A79C8B}
-  .again{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);border:1px solid #C9B79A;background:#FFFDF8;
-    border-radius:999px;padding:8px 14px;font:inherit;font-size:12px;font-weight:700;color:#4A443D;cursor:pointer}
-  @media (prefers-reduced-motion: reduce){
-    .cover{animation:none;transform:rotateY(-158deg)}
-    .line,.sig{animation:none;transform:scaleX(1);opacity:.6}
+      radial-gradient(70% 45% at 32% 18%, rgba(255,214,160,.16), transparent 62%),
+      radial-gradient(120% 90% at 50% 40%, #2A211A 0%, #171310 62%, #0C0A08 100%);
+    display:flex;align-items:center;justify-content:center;perspective:1600px;
+    box-shadow:0 30px 80px rgba(0,0,0,.55)}
+  .stage:after{ /* table grain, very low contrast */
+    content:"";position:absolute;inset:0;opacity:.16;mix-blend-mode:overlay;
+    background-image:repeating-linear-gradient(92deg, rgba(255,240,215,.16) 0 1px, transparent 1px 7px);
   }
+  .book{position:relative;width:252px;height:336px;transform-style:preserve-3d;
+    transform:rotateX(16deg) rotateY(-9deg) rotateZ(-1deg);animation:settle 1.6s ease-out both}
+
+  /* the page block: leaves you can see the edges of */
+  .block{position:absolute;left:4px;right:-4px;top:4px;bottom:-4px;border-radius:3px 7px 7px 3px;
+    background-image:url(art/pages-warm.png);background-size:100% 100%;background-position:left center;
+    filter:brightness(.92) saturate(.95);
+    box-shadow:10px 14px 28px rgba(0,0,0,.6), inset -3px 0 8px rgba(70,46,24,.35)}
+  .block:after{content:"";position:absolute;inset:0;border-radius:inherit;
+    background:linear-gradient(90deg, rgba(0,0,0,.35), transparent 18%, transparent 88%, rgba(0,0,0,.22))}
+
+  /* the open page, revealed as the cover swings */
+  .page{position:absolute;left:6px;right:-7px;top:5px;bottom:-6px;border-radius:3px 8px 8px 3px;
+    background:linear-gradient(100deg,#F3EAD8,#FFFDF6 26%,#FBF4E6 78%,#EFE3CE);padding:44px 26px 30px 34px;
+    box-shadow:inset 0 0 60px rgba(150,120,80,.18)}
+  .page .head{animation:ink 1.4s ease-out 1.35s both}
+  .page .chapter{font-family:Georgia,serif;font-size:19px;letter-spacing:.02em;color:#2A2A26;margin-bottom:10px}
+  .page .rule{height:1px;background:#DCCDB2;margin:10px 0 12px}
+  .page p{font-family:Georgia,serif;font-size:11.5px;line-height:1.75;color:#4A4034;margin:0 0 9px}
+  .page p.dim{color:#7A6B57}
+  .page .folio{position:absolute;bottom:16px;left:0;right:22px;text-align:center;font-family:Georgia,serif;
+    font-size:10px;color:#9A8A72}
+  @keyframes ink{from{opacity:0}to{opacity:1}}
+  .page .l{height:9px;border-radius:5px;background:#2B241E;opacity:.2;margin-bottom:13px;transform:scaleX(0);
+    transform-origin:left center;animation:write .7s ease-out forwards}
+  .page .t{height:17px;width:58%;opacity:.62;background:#22352D;animation-delay:1.45s}
+  .page .a{width:90%;animation-delay:1.6s}.page .b{width:84%;animation-delay:1.72s}.page .c{width:62%;animation-delay:1.84s}
+  .page .sig{font-family:Georgia,serif;font-style:italic;font-size:13.5px;color:#8A7A63;opacity:0;
+    animation:fade .8s ease-out 2.1s forwards}
+  .page .gutter{position:absolute;left:0;top:0;bottom:0;width:34px;
+    background:linear-gradient(90deg, rgba(90,64,36,.30), rgba(90,64,36,.05) 60%, transparent)}
+
+  /* the cover, pivoting on the spine */
+  .cover{position:absolute;left:0;top:0;width:252px;height:336px;transform-origin:left center;
+    transform-style:preserve-3d;animation:open 1.15s cubic-bezier(.2,.75,.15,1) .5s forwards}
+  .cover .front,.cover .inside{position:absolute;inset:0;border-radius:3px 9px 9px 3px;
+    backface-visibility:hidden;transform:translateZ(2px)}
+  .cover .front{background-image:url(art/cover-front.png);background-size:cover;
+    box-shadow:0 22px 40px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,220,170,.06)}
+  .cover .front:after{ /* the light falls across it, not behind it */
+    content:"";position:absolute;inset:0;border-radius:inherit;
+    background:linear-gradient(128deg, rgba(255,226,180,.16) 0%, rgba(255,226,180,.04) 26%, rgba(0,0,0,.18) 72%, rgba(0,0,0,.34) 100%)}
+  .cover .inside{transform:rotateY(180deg) translateZ(2px);
+    background-image:url(art/endpaper.png);background-size:cover;
+    filter:sepia(.35) brightness(.72) saturate(.8);
+    box-shadow:inset -30px 0 50px rgba(40,26,14,.55), inset 0 0 0 1px rgba(60,40,22,.5)}
+
+  .caption{position:absolute;bottom:34px;left:0;right:0;text-align:center;font-size:10px;letter-spacing:.2em;
+    text-transform:uppercase;color:rgba(232,213,182,.55)}
+  .shadow{position:absolute;left:50%;bottom:196px;width:280px;height:30px;transform:translateX(-46%);
+    background:radial-gradient(closest-side, rgba(0,0,0,.72), rgba(0,0,0,.22) 55%, transparent 78%);filter:blur(9px)}
+
+  @keyframes settle{from{transform:rotateX(20deg) rotateY(-13deg) rotateZ(-2deg) translateY(10px)}
+                    to{transform:rotateX(16deg) rotateY(-9deg) rotateZ(-1deg)}}
+  @keyframes open{0%{transform:rotateY(0)}100%{transform:rotateY(-156deg)}}
+  @keyframes write{to{transform:scaleX(1)}}
+  @keyframes fade{to{opacity:1}}
+  @media (prefers-reduced-motion: reduce){
+    .cover{animation:none;transform:rotateY(-156deg)}
+    .page .l{animation:none;transform:scaleX(1)} .page .sig{animation:none;opacity:1}
+  }
+  .again{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);border:1px solid rgba(200,170,130,.45);
+    background:rgba(30,24,18,.9);color:#D9C6A8;border-radius:999px;padding:8px 14px;font:inherit;font-size:12px;cursor:pointer}
 </style>
 </head>
 <body>
-  <div class="stage" id="stage">
-    <div class="book">
-      <div class="pages">
-        <div class="line title"></div>
-        <div class="line t w1"></div>
-        <div class="line w2"></div>
-        <div class="line w3"></div>
+<div class="stage" id="stage">
+  <div class="shadow"></div>
+  <div class="book">
+    <div class="block"></div>
+    <div class="page">
+      <div class="head">
+        <div class="chapter">Chapter One</div>
         <div class="rule"></div>
-        <div class="sig">and that is where the story starts.</div>
+        <p>I was born in Chicago, in a suburb called Downers Grove, in a house with a
+        two-door garage and an apple tree at the side of it.</p>
+        <p class="dim">My mother always said the tree was there before the house was.</p>
+        <p class="sig">and that is where the story starts.</p>
+        <div class="folio">1</div>
       </div>
-      <div class="cover">
-        <div class="face front">
-          <div class="spine"></div>
-          <div class="plate">
-            <div class="mark">M</div>
-            <h1>MEM</h1>
-            <p>a life, in his words</p>
-          </div>
-          <div class="clasp"></div>
-        </div>
-        <div class="face back"></div>
-      </div>
+      <div class="gutter"></div>
     </div>
-    <div class="glow"></div>
-    <div class="cap">the first page is blank until you speak</div>
+    <div class="cover">
+      <div class="front"></div>
+      <div class="inside"></div>
+    </div>
   </div>
-  <button class="again" onclick="replay()">play again</button>
+  <div class="caption">the first page is blank until you speak</div>
+</div>
+<button class="again" onclick="replay()">play again</button>
 <script>
-  function replay(){
-    const s=document.getElementById('stage');
-    const clone=s.cloneNode(true); s.parentNode.replaceChild(clone,s);
-  }
+function replay(){
+  const s=document.getElementById('stage'); const c=s.cloneNode(true);
+  s.parentNode.replaceChild(c,s);
+}
 </script>
 </body>
 </html>
