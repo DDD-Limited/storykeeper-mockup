@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mem — the tome opening, head on</title>
+<style>
+  html,body{height:100%;margin:0;background:#0A0705;display:flex;align-items:center;justify-content:center;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+  .stage{position:relative;width:390px;height:844px;overflow:hidden;border-radius:44px;background:#0A0705;
+    box-shadow:0 30px 80px rgba(0,0,0,.65)}
+  video{width:100%;height:100%;object-fit:cover}
+  .caption{position:absolute;left:0;right:0;bottom:46px;text-align:center;font-size:9.5px;letter-spacing:2.4px;
+    text-transform:uppercase;color:rgba(226,206,174,.5);opacity:0;transition:opacity .5s ease}
+  .caption.on{opacity:1}
+  .again{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);border:1px solid rgba(200,170,130,.4);
+    background:rgba(28,22,16,.92);color:#D9C6A8;border-radius:999px;padding:8px 14px;font:inherit;font-size:12px;cursor:pointer}
+</style>
+</head>
+<body>
+<div class="stage">
+  <video id="v" src="art/tome-open.mp4" playsinline muted autoplay preload="auto"></video>
+  <div class="caption" id="c">the first page is blank until you speak</div>
+</div>
+<button class="again" onclick="play()">play again</button>
+<script>
+const v = document.getElementById('v'), c = document.getElementById('c');
+function play(){ c.classList.remove('on'); v.currentTime = 0; v.play(); }
+v.addEventListener('ended', () => c.classList.add('on'));
+setTimeout(() => { if (v.ended) c.classList.add('on'); }, 1900);
+</script>
+</body>
+</html>
