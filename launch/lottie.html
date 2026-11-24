@@ -1,0 +1,19 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Mem mark — Lottie preview</title>
+<style>
+  html,body{margin:0;background:#0B0A09;height:100%}
+  #stage{width:540px;height:960px;margin:0 auto;position:relative}
+  #t{position:fixed;left:8px;bottom:8px;color:#8a8377;font:12px ui-monospace,monospace}
+</style></head>
+<body>
+<div id="stage"></div><div id="t">frame 0</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+<script>
+  const anim = lottie.loadAnimation({
+    container: document.getElementById('stage'),
+    renderer: 'svg', loop: false, autoplay: false, path: 'mark.json'
+  });
+  window.seek = (f) => { anim.goToAndStop(f, true); document.getElementById('t').textContent = 'frame ' + f; return f; };
+  anim.addEventListener('DOMLoaded', () => { window.ready = true; window.seek(60); });
+</script>
+</body></html>
