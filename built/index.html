@@ -7,14 +7,14 @@
 <style>
   :root{
     --ink:#0B0A09; --paper:#F4EFE6; --dim:#A79C8B; --rule:#2A2622;
-    --accent:#C8A76B; --card:#141210; --warn:#8C6A3F;
+    --accent:#C8A76B; --card:#EDE6D8; --warn:#8C6A3F;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--ink);color:var(--paper);
        font:15px/1.55 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
   header{padding:34px 28px 8px;max-width:1500px;margin:0 auto}
   h1{font-size:26px;margin:0 0 6px;letter-spacing:.01em}
-  .sub{color:var(--dim);max-width:70ch;margin:0}
+  .sub{color:var(--dim);max-width:74ch;margin:0}
   .sub b{color:var(--paper);font-weight:600}
   .strip{display:flex;gap:26px;overflow-x:auto;padding:26px 28px 40px;max-width:1500px;margin:0 auto;
          scroll-snap-type:x mandatory}
@@ -27,13 +27,14 @@
        letter-spacing:.18em;text-transform:uppercase;color:#6B6153;margin-bottom:14px}
   .bar .links{letter-spacing:0;text-transform:none;display:flex;gap:10px;font-size:12px}
   .bar .here{color:#9A8F7E}
+  .bar .talk{color:#8C6A3F;font-weight:600}
   h2{font-size:20px;margin:0 0 4px;font-weight:600}
   h3{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8A7F6E;margin:20px 0 8px}
   .pill{display:inline-block;font-size:11px;border:1px solid #D8CFBE;border-radius:999px;
         padding:3px 10px;color:#6B6153;margin-bottom:14px}
   .big{font-size:34px;line-height:1;margin:2px 0 2px}
   .note{color:#8A7F6E;font-size:12px}
-  .card{background:#EDE6D8;border-radius:12px;padding:12px 13px;margin:9px 0}
+  .card{background:var(--card);border-radius:12px;padding:12px 13px;margin:9px 0}
   .card .t{font-weight:600;font-size:14px}
   .card .m{color:#7C7263;font-size:12px;margin-top:3px}
   .quote{font-size:14px;margin:0 0 8px}
@@ -49,6 +50,7 @@
   .dot{width:7px;height:7px;border-radius:50%;background:#D8CFBE}
   .dot.on{background:#8C6A3F}
   .zero{opacity:.45}
+  .plan{border:1px solid #C9BFAE;border-radius:12px;padding:12px 13px;margin:9px 0;background:#F0EAD9}
   footer{max-width:1500px;margin:0 auto;padding:0 28px 60px;color:var(--dim);font-size:13px}
   footer b{color:var(--paper)}
   code{background:#1D1A17;padding:1px 5px;border-radius:4px;font-size:12px;color:#D8CFBE}
@@ -57,20 +59,21 @@
 <body>
 <header>
   <h1>What is built — 24 November 2026</h1>
-  <p class="sub">Six views, as the app on the phone draws them after <code>0.7.9</code>.
-  <b>The figures are from David's record</b> (114 passages, 14 of 17 aspects reached, 3 true zeros).
-  <b>The words are the wireframe's fixture</b> — his own passages are deliberately not published here,
-  because this repository is public and that record is his.</p>
+  <p class="sub">Five views, as <code>0.7.10</code> draws them, with <b>Talk first in the row on every
+  screen</b> and <b>Home carrying the plan</b>. <b>The figures are from David's record</b> (114
+  passages, 54 with a recording, 14 of 17 aspects, 3 true zeros). <b>The words are the wireframe's
+  fixture</b> — his own passages are deliberately not published here, because this repository is
+  public and that record is his.</p>
 </header>
 
 <div class="strip">
 
   <!-- TALK -->
   <div class="frame">
-    <p class="cap"><b>Talk</b> — where the app opens</p>
+    <p class="cap"><b>Talk</b> — where the app opens, and one tap from anywhere</p>
     <div class="phone">
       <div class="bar"><span>STORYKEEPER</span>
-        <span class="links"><span class="here">Home</span><span>Notebook</span><span>Archive ›</span></span></div>
+        <span class="links"><span class="here">Talk</span><span>Home</span><span>Archive ›</span></span></div>
       <span class="pill">Mina · neutral voice</span>
       <h2>Tonight</h2>
       <p class="plain">the state control: one control, and it says what it is doing</p>
@@ -80,15 +83,16 @@
       <p class="quote">“You said the tram went all night outside your window. What did that sound
       like when you were trying to sleep?”</p>
       <div class="row"><span>end this call</span><span class="play">End</span></div>
+      <p class="plain">ending asks first, and keeps the sentence that was in flight</p>
     </div>
   </div>
 
   <!-- HOME -->
   <div class="frame">
-    <p class="cap"><b>Home</b> — not a list</p>
+    <p class="cap"><b>Home</b> — where the record stands, and what would fill it</p>
     <div class="phone">
       <div class="bar"><span>STORYKEEPER</span>
-        <span class="links"><span class="here">Home</span><span>Notebook</span><span>Archive ›</span></span></div>
+        <span class="links"><span class="talk">Talk</span><span class="here">Home</span><span>Archive ›</span></span></div>
       <h2>Your life, as far as it is written</h2>
       <p class="note">breadth</p>
       <div class="big">14 of 17</div>
@@ -106,8 +110,14 @@
           <div class="depth"><i class="dot"></i><i class="dot"></i><i class="dot"></i></div></div>
       </div>
 
-      <h3>Photos waiting for a story</h3>
-      <p class="plain">not measured yet</p>
+      <h3>What to ask next</h3>
+      <div class="plan">
+        <div class="t">“What did your father keep under the counter?”</div>
+        <div class="m">opens the next call · fills: the shop</div>
+      </div>
+      <div class="card"><div class="t">The year you stopped sailing</div>
+        <div class="m">a thread left open · mentioned twice, never explained</div></div>
+      <p class="note">12 themes with no question yet</p>
 
       <h3>Stories</h3>
       <div class="card"><div class="t">The green motorbike</div>
@@ -123,7 +133,7 @@
     <p class="cap"><b>Archive</b> — every passage, the ask field at its head</p>
     <div class="phone">
       <div class="bar"><span>STORYKEEPER</span>
-        <span class="links"><span>Home</span><span>Notebook</span><span class="here">Archive</span></span></div>
+        <span class="links"><span class="talk">Talk</span><span>Home</span><span class="here">Archive</span></span></div>
       <h2>Archive</h2>
       <div class="ask">Ask the archive about your life</div>
       <p class="note">114 passages · 54 with a recording</p>
@@ -138,25 +148,6 @@
         <div class="row"><span class="plain">no recording of these words</span><span></span></div>
       </div>
       <p class="plain">a quotation is a door: tap it and the story opens</p>
-    </div>
-  </div>
-
-  <!-- NOTEBOOK -->
-  <div class="frame">
-    <p class="cap"><b>Notebook</b> — the plan, not the record</p>
-    <div class="phone">
-      <div class="bar"><span>STORYKEEPER</span>
-        <span class="links"><span>Home</span><span class="here">Notebook</span><span>Archive ›</span></span></div>
-      <h2>Notebook</h2>
-      <h3>Opens the next call</h3>
-      <div class="card"><div class="t">“What did your father keep under the counter?”</div>
-        <div class="m">fills: the shop</div></div>
-      <h3>Threads left open</h3>
-      <div class="card"><div class="t">The year you stopped sailing</div>
-        <div class="m">mentioned twice, never explained</div></div>
-      <h3>Never asked</h3>
-      <p class="note">12 themes with no question yet</p>
-      <p class="plain">no quotation and no play control live on this screen</p>
     </div>
   </div>
 
@@ -176,7 +167,8 @@
       <p class="note">parents · Nathan Road</p>
       <h3>The question that produced it</h3>
       <p class="quote">“Tell me about the day you got the bike.”</p>
-      <p class="plain">no recording → no play button, and it says so</p>
+      <div class="row"><span>a word to correct</span><span class="play">correct</span></div>
+      <p class="plain">a correction is a new statement; the original stays underneath it</p>
     </div>
   </div>
 
@@ -203,13 +195,16 @@
 
 <footer>
   <p><b>What is real here.</b> The counts: 114 passages, 54 with a recording, 14 of 17 aspects, three
-  true zeros (the shop, your children, beliefs). The navigation: Home, Notebook and Archive are three
-  screens, each reachable from the call screen, and the place you are in is text rather than a button.
-  Tap-through: a quotation opens its story, a story's play control plays its own seconds.</p>
+  true zeros (the shop, your children, beliefs). The navigation: <b>Talk is the first item in the row on
+  every screen</b>, Home carries the plan, Archive carries every passage, and the place you are standing
+  in is text rather than a control. Tap-through: a quotation opens its story, a story's play control
+  plays its own seconds, a word can be corrected with the original kept.</p>
   <p><b>What is fixture.</b> Every sentence in quotation marks is the wireframe's invented family, not
-  David's recording. The aspect names and the story cards are drawn from his real themes, but the two
-  cards shown would carry his real titles when they are read from the archive.</p>
-  <p>Built from <code>0.7.9</code> (versionCode 47), release <code>v0.45</code>. The design spec it is
+  David's recording. The aspect names and story cards are drawn from his real themes.</p>
+  <p><b>What has no design in it yet.</b> Photos: the queue says "not measured yet" because the media
+  route does not exist. Notebook is gone as a place — its plan is the "What to ask next" section on
+  Home.</p>
+  <p>Built from <code>0.7.10</code> (versionCode 48), release <code>v0.46</code>. The design spec it is
   measured against is the <a href="../phase-1/" style="color:#C8A76B">Phase 1 wireframe</a>.</p>
 </footer>
 </body>
